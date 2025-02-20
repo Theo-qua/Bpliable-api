@@ -3,6 +3,7 @@ FROM rocker/r-ver:latest
 
 # Install required R packages
 RUN R -e "install.packages(c('plumber'))"
+RUN R -e "devtools::install_github("Theo-qua/Bpliable")"
 
 # Set the working directory in the container
 WORKDIR /app
