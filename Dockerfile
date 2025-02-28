@@ -2,20 +2,19 @@
 FROM rocker/r-ver:latest
 
 # Install required R packages
-RUN R -e "install.packages(c('plumber'))"
-RUN R -e "devtools::install_github("Theo-qua/Bpliable")"
+RUN R -e "install.packages(c('plumber','remotes')"
+RUN R -e "remotes::install_github('Theo-qua/Bpliable')"
 
 # Set the working directory in the container
-WORKDIR /app
+#WORKDIR /app
 
 # Copy API files to the container
-COPY . /app
+#COPY . /app
 
 # Expose the API port
 EXPOSE 8000
 
 # Run the Plumber API using Bpliable-API.R
-CMD R -e "pr <- plumber::plumb('/app/Bpliable_API.R'); pr$run(host='0.0.0.0', 
-port=8000)"
+CMD R -e "pr <- plumber::plumb('Bpliable_API.R'); pr$run()"
 
 
