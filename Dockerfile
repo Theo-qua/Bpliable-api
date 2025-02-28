@@ -2,7 +2,7 @@
 FROM rocker/r-ver:latest
 
 # Install required R packages
-RUN R -e "install.packages(c('plumber','remotes')"
+RUN R -e "install.packages(c('plumber','remotes'))"
 RUN R -e "remotes::install_github('Theo-qua/Bpliable')"
 
 # Set the working directory in the container
