@@ -2,8 +2,7 @@
 FROM rocker/r-ver:latest
 
 # Install required R packages
-RUN R -e "install.packages(c('plumber','remotes', 'readr'. 'httr', 'magrittr',
-'ggplot2','gapminder','graphics','plotly'))"
+RUN R -e "install.packages(c('plumber','remotes', 'readr', 'httr', 'magrittr','ggplot2','gapminder','graphics','plotly'))"
 RUN R -e "remotes::install_github('Theo-qua/Bpliable')"
 
 # make app folder
