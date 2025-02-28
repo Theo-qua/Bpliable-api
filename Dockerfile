@@ -18,6 +18,6 @@ COPY . /app
 EXPOSE 8000
 
 # Run the Plumber API using Bpliable-API.R
-CMD R -e "pr <- plumber::plumb('/app/Bpliable_API.R'); pr_run(pr)"
+CMD R -e "pr <- plumber::plumb('/app/Bpliable_API.R'); pr_run(pr, '0.0.0.0', 8000)"
 
 
