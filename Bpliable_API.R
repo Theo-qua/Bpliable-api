@@ -140,12 +140,27 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
 
   if(type=="ms"|type=="val"|type=="likelihood"){
+    # Define file path (use tempfile() if necessary)
+    file <- "/data/plot.png"
+    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
   #print(rds_file$Bpliable_call.rds$coef[, as.numeric(coef_val1)])
 if (coef_val2 == 0){
   # Call the plot function
   coef_val1=as.numeric(coef_val1)
-  plot<- plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
+  # Open PNG graphics device
+  png(file)
+   plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
+   # Close graphics device to save the file
+   dev.off()
+
+   # Check if file exists before returning
+   if (file.exists(file)) {
+     return(readBin(file, "raw", n = file.info(file)$size))
+   } else {
+     stop("Error: Base R plot file was not created successfully.")
+   }
+
 }else{
   # Call the plot function
   coef_val=c(as.numeric(coef_val1),as.numeric(coef_val2))
