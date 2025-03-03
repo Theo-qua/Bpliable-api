@@ -88,22 +88,23 @@ function(rds_file,
 
   #Bpliable(Y = y, X = X, Z = Z, alpha = as.numeric(malpha), family = family, niter = as.numeric(niter), burnin = as.numeric(burnin), a_rho = as.numeric(a_rho), b_rho = as.numeric(b_rho), a_zeta = as.numeric(a_zeta), b_zeta = as.numeric(b_zeta), num_update = as.numeric(num_update), niter.update = as.numeric(niter_update), burnin.update = as.numeric(burnin_update), verbose1 = verbose1, verbose2 = verbose2, lam1 = as.numeric(lam1), lam2 = as.numeric(lam2), rho_prior = rho_prior, rho = as.numeric(rho), zeta = as.numeric(zeta), c2 = as.numeric(c2), v2 = as.numeric(v2), update_tau = update_tau, option.weight.group = option_weight_group, option.update = option_update, lambda2_update = as.numeric(lambda2_update))
 
-  saveRDS(fit, "Bpliable_call.rds")
+  saveRDS(fit, file="/mnt/data/Bpliable_call.rds")
   return(list(message = "Model saved successfully", path = "Bpliable_call.rds"))
 }
 
 
-#* @get /download_results
+#* @get /get_results
 #* @serializer contentType list(type="application/octet-stream")
 function() {
-  file_path <- "/tmp/Bpliable_call.rds"
+  file_path <- "/mnt/data/Bpliable_call.rds"
 
-  if (file.exists(file_path)) {
-    res <- readBin(file_path, "raw", file.info(file_path)$size)
-    return(res)
-  } else {
-    return(list(error = "File not found. Run the model first."))
+  if (!file.exists(file_path)) {
+    res$status <- 404
+    return(list(error = "No model results found. Please fit the model first."))
   }
+
+  raw_data <- readBin(file_path, "raw", file.info(file_path)$size)
+  return(raw_data)
 }
 
 #* Returns a plots from the Bpliable object
