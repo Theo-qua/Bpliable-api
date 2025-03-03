@@ -107,7 +107,7 @@ function() {
     return(list(error = "No model results found. Please fit the model first."))
   }
 
-  raw_data <- readBin(file_path, "raw", file.info(file_path)$size)
+  raw_data <-file(file_path, "rb")# readBin(file_path, "raw", file.info(file_path)$size)
   return(raw_data)
 }
 
