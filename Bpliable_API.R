@@ -107,8 +107,16 @@ function() {
     return(list(error = "No model results found. Please fit the model first."))
   }
 
-  raw_data <-file(file_path, "rb")# readBin(file_path, "raw", file.info(file_path)$size)
-  return(raw_data)
+  # Set the Content-Type header to 'application/rds' for RDS files
+  res$setHeader("Content-Type", "application/rds")
+
+  # Set the Content-Disposition header so that the file is downloaded with the correct name
+  res$setHeader("Content-Disposition", paste("attachment; filename=", basename(file_path), sep = ""))
+
+  # Serve the .rds file
+  return(file(file_path, "rb"))
+  #raw_data <-file(file_path, "rb")# readBin(file_path, "raw", file.info(file_path)$size)
+  #return(raw_data)
 }
 
 #* Returns a plots from the Bpliable object
