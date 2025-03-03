@@ -99,7 +99,7 @@ function(rds_file,
 #* @get /get_results
 #* @serializer contentType list(type="application/octet-stream")
 function() {
-  file_path <- "/mnt/data/Bpliable_call.rds"
+  file_path <- "/data/Bpliable_call.rds"
 
 
   if (!file.exists(file_path)) {
