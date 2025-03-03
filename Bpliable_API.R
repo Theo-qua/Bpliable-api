@@ -150,11 +150,20 @@ if (coef_val2 == 0){
   coef_val1=as.numeric(coef_val1)
 
   print(paste("Saving plot to:", file))  # Debugging print
-  # Open PNG graphics device
-  png(file)
-   plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
-   # Close graphics device to save the file
-   dev.off()
+
+  # Open PNG graphics device with proper width/height
+  png(file, width = 6.67, height = 6.67, units = "in", res = 300)
+
+  # Try to generate the plot safely
+  tryCatch({
+    plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
+    print("Plot generated successfully!")  # Debugging message
+  }, error = function(e) {
+    dev.off()  # Ensure the device is closed on error
+    stop("Error generating plot: ", e$message)
+  })
+
+  dev.off()
 
    # Check if file exists before returning
    if (file.exists(file)) {
