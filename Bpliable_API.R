@@ -98,7 +98,7 @@ function(rds_file,
 
 #* @get /get_results
 #* @serializer contentType list(type="application/octet-stream")
-function() {
+function(req, res) {
   file_path <- "/data/Bpliable_call.rds"
 
 
