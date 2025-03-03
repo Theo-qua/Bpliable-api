@@ -90,6 +90,7 @@ function(rds_file,
 
   dir.create("/mnt/data", showWarnings = FALSE, recursive = TRUE)
   saveRDS(fit, file="/mnt/data/Bpliable_call.rds")
+  print(list.files("/data")) # print the files in the data directory
   return(list(message = "Model saved successfully", path = "Bpliable_call.rds"))
 }
 
@@ -98,6 +99,7 @@ function(rds_file,
 #* @serializer contentType list(type="application/octet-stream")
 function() {
   file_path <- "/mnt/data/Bpliable_call.rds"
+
 
   if (!file.exists(file_path)) {
     res$status <- 404
