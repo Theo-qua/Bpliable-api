@@ -138,6 +138,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
   library(graphics)
   library(plotly)
 
+  dir.create("/data", showWarnings = FALSE, recursive = TRUE)  # Ensure /data exists
   if(type=="ms"|type=="val"|type=="likelihood"){
 
   #print(rds_file$Bpliable_call.rds$coef[, as.numeric(coef_val1)])
