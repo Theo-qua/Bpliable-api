@@ -164,7 +164,17 @@ if (coef_val2 == 0){
 }else{
   # Call the plot function
   coef_val=c(as.numeric(coef_val1),as.numeric(coef_val2))
-  plot<- plot( x = rds_file$Bpliable_call.rds,type = type, coef_val = coef_val)
+  png(file)
+   plot( x = rds_file$Bpliable_call.rds,type = type, coef_val = coef_val)
+   # Close graphics device to save the file
+   dev.off()
+
+   # Check if file exists before returning
+   if (file.exists(file)) {
+     return(readBin(file, "raw", n = file.info(file)$size))
+   } else {
+     stop("Error: Base R plot file was not created successfully.")
+   }
 }
 
 
