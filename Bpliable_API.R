@@ -137,6 +137,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
   library(Bpliable)
   library(graphics)
   library(plotly)
+
   if(type=="ms"|type=="val"|type=="likelihood"){
 
   #print(rds_file$Bpliable_call.rds$coef[, as.numeric(coef_val1)])
@@ -150,7 +151,7 @@ if (coef_val2 == 0){
   plot<- plot( x = rds_file$Bpliable_call.rds,type = type, coef_val = coef_val)
 }
 
-  file <- "plot.png"
+  file <- "/data/plot.png"
   ggsave(plot=plot,filename=file)
   readBin(file, "raw", n = file.info(file)$size)
   }else if (type=="dist" & coef_val2 == 0){
@@ -166,7 +167,7 @@ if (coef_val2 == 0){
       theme_gray()
 
     print(gg_hist)
-    file <- "plot.png"
+    file <- "/data/plot.png"
     ggsave(plot=gg_hist,filename=file)
     readBin(file, "raw", n = file.info(file)$size)
 
@@ -184,7 +185,7 @@ if (coef_val2 == 0){
       theme_gray()
 
     print(gg_hist)
-    file <- "plot.png"
+    file <- "/data/plot.png"
     ggsave(plot=gg_hist,filename=file)
     readBin(file, "raw", n = file.info(file)$size)
 
@@ -206,7 +207,7 @@ if (coef_val2 == 0){
       theme_gray()
 
     print(gg_hist)
-    file <- "plot.png"
+    file <- "/data/plot.png"
     ggsave(plot=gg_hist,filename=file)
     readBin(file, "raw", n = file.info(file)$size)
 
