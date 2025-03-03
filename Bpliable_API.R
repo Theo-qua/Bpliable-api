@@ -138,16 +138,18 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
   library(graphics)
   library(plotly)
 
+  file <- "/data/plot.png"
+  dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
   if(type=="ms"|type=="val"|type=="likelihood"){
     # Define file path (use tempfile() if necessary)
-    file <- "/data/plot.png"
-    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
   #print(rds_file$Bpliable_call.rds$coef[, as.numeric(coef_val1)])
 if (coef_val2 == 0){
   # Call the plot function
   coef_val1=as.numeric(coef_val1)
+
+  print(paste("Saving plot to:", file))  # Debugging print
   # Open PNG graphics device
   png(file)
    plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
