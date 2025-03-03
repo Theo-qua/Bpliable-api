@@ -102,11 +102,9 @@ function() {
   file_path <- "/data/Bpliable_call.rds"
 
 
-  if (!file.exists(file_path)) {
-    res$status <- 404
-    return(list(error = "No model results found. Please fit the model first."))
-  }
 
+  if (file.exists(file_path)) {
+  file_data <- readBin(file_path, "raw", file.info(file_path)$size)
   # Set the Content-Type header to 'application/rds' for RDS files
   res$setHeader("Content-Type", "application/rds")
 
@@ -114,7 +112,12 @@ function() {
   res$setHeader("Content-Disposition", paste("attachment; filename=", basename(file_path), sep = ""))
 
   # Serve the .rds file
-  return(file(file_path, "rb"))
+  return(file_data)
+  }else {
+    # If the file does not exist, return a 404 error
+    res$status <- 404
+    return(list(error = "File not found"))
+  }
   #raw_data <-file(file_path, "rb")# readBin(file_path, "raw", file.info(file_path)$size)
   #return(raw_data)
 }
