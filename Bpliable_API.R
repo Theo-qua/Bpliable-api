@@ -152,21 +152,6 @@ if (coef_val2 == 0){
   plot<- plot( x = rds_file$Bpliable_call.rds,type = type, coef_val = coef_val)
 }
 
-    dir.create("/data", showWarnings = FALSE, recursive = TRUE)  # Ensure /data exists
-  file <- "/data/plot.png"
-  # Check before saving
-  print(paste("Saving plot to:", file))
-  ggsave(plot=plot,filename=file)
-
-  # Check if file exists after saving
-  print(paste("File exists:", file.exists(file)))
-
-  if (file.exists(file)) {
-    return(readBin(file, "raw", n = file.info(file)$size))
-  } else {
-    stop("Error: Plot file was not created successfully.")
-  }
-
 
   }else if (type=="dist" & coef_val2 == 0){
     coef_val1=as.numeric(coef_val1)
