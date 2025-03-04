@@ -141,13 +141,13 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
   file <- "/data/plot.png"
   dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
-  if(type=="ms"|type=="val"|type=="likelihood"){
+  if(type=="likelihood"){
     # Define file path (use tempfile() if necessary)
 
   #print(rds_file$Bpliable_call.rds$coef[, as.numeric(coef_val1)])
-if (coef_val2 == 0){
+
   # Call the plot function
-  coef_val1=as.numeric(coef_val1)
+
 
   print(paste("Saving plot to:", file))  # Debugging print
 
@@ -156,7 +156,8 @@ if (coef_val2 == 0){
 
   # Try to generate the plot safely
   tryCatch({
-    plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
+    plot(log(rds_file$Bpliable_call.rds$Likelihood),type = "l",ylab = "log(likelihood)",xlab = "iterations")
+    #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
     print("Plot generated successfully!")  # Debugging message
   }, error = function(e) {
     dev.off()  # Ensure the device is closed on error
@@ -172,21 +173,121 @@ if (coef_val2 == 0){
      stop("Error: Base R plot file was not created successfully.")
    }
 
-}else{
-  # Call the plot function
-  coef_val=c(as.numeric(coef_val1),as.numeric(coef_val2))
-  png(file)
-   plot( x = rds_file$Bpliable_call.rds,type = type, coef_val = coef_val)
-   # Close graphics device to save the file
-   dev.off()
 
-   # Check if file exists before returning
-   if (file.exists(file)) {
-     return(readBin(file, "raw", n = file.info(file)$size))
-   } else {
-     stop("Error: Base R plot file was not created successfully.")
-   }
-}
+
+
+  }else if(type=="ms"){
+    # Define file path (use tempfile() if necessary)
+
+    #print(rds_file$Bpliable_call.rds$coef[, as.numeric(coef_val1)])
+
+    # Call the plot function
+
+    model_size<-c()
+    for (i in 1:nrow(rds_file$Bpliable_call.rds$coef_beta_all)) {
+      beta_nz<-sum(rds_file$Bpliable_call.rds$coef_beta_all[i,]!=0)
+
+      theta_nz<-sum(rds_file$Bpliable_call.rds$coef_theta_all[i,,]!=0)
+      model_size=c(model_size,sum(beta_nz,theta_nz))
+    }
+
+    print(paste("Saving plot to:", file))  # Debugging print
+
+    # Open PNG graphics device with proper width/height
+    png(file, width = 6.67, height = 6.67, units = "in", res = 300)
+
+    # Try to generate the plot safely
+    tryCatch({
+      plot(model_size,type = "l",ylab = "Model size",xlab = "iterations")
+      #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
+      print("Plot generated successfully!")  # Debugging message
+    }, error = function(e) {
+      dev.off()  # Ensure the device is closed on error
+      stop("Error generating plot: ", e$message)
+    })
+
+    dev.off()
+
+    # Check if file exists before returning
+    if (file.exists(file)) {
+      return(readBin(file, "raw", n = file.info(file)$size))
+    } else {
+      stop("Error: Base R plot file was not created successfully.")
+    }
+
+
+
+
+  }else if(type=="val" &coef_val2 == 0){
+    # Define file path (use tempfile() if necessary)
+
+    #print(rds_file$Bpliable_call.rds$coef[, as.numeric(coef_val1)])
+
+    # Call the plot function
+
+
+
+    print(paste("Saving plot to:", file))  # Debugging print
+
+    # Open PNG graphics device with proper width/height
+    png(file, width = 6.67, height = 6.67, units = "in", res = 300)
+
+    # Try to generate the plot safely
+    tryCatch({
+      plot(rds_file$Bpliable_call.rds$pos_mpm_beta,main = "",xlab =  expression(beta) ,ylab = "coefficient")
+      #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
+      print("Plot generated successfully!")  # Debugging message
+    }, error = function(e) {
+      dev.off()  # Ensure the device is closed on error
+      stop("Error generating plot: ", e$message)
+    })
+
+    dev.off()
+
+    # Check if file exists before returning
+    if (file.exists(file)) {
+      return(readBin(file, "raw", n = file.info(file)$size))
+    } else {
+      stop("Error: Base R plot file was not created successfully.")
+    }
+
+
+
+
+  }else if(type=="val" &coef_val2 != 0){
+    # Define file path (use tempfile() if necessary)
+
+    #print(rds_file$Bpliable_call.rds$coef[, as.numeric(coef_val1)])
+
+    # Call the plot function
+
+
+
+    print(paste("Saving plot to:", file))  # Debugging print
+
+    # Open PNG graphics device with proper width/height
+    png(file, width = 6.67, height = 6.67, units = "in", res = 300)
+
+    # Try to generate the plot safely
+    tryCatch({
+      plot(c(rds_file$Bpliable_call.rds$pos_mpm_theta),main = "",xlab = expression(theta),ylab = "coefficient" )
+      #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
+      print("Plot generated successfully!")  # Debugging message
+    }, error = function(e) {
+      dev.off()  # Ensure the device is closed on error
+      stop("Error generating plot: ", e$message)
+    })
+
+    dev.off()
+
+    # Check if file exists before returning
+    if (file.exists(file)) {
+      return(readBin(file, "raw", n = file.info(file)$size))
+    } else {
+      stop("Error: Base R plot file was not created successfully.")
+    }
+
+
 
 
   }else if (type=="dist" & coef_val2 == 0){
