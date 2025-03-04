@@ -138,8 +138,6 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
   library(graphics)
   library(plotly)
 
-  file <- "/data/plot.png"
-  dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
   if(type=="likelihood"){
     # Define file path (use tempfile() if necessary)
@@ -148,6 +146,8 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
   # Call the plot function
 
+    file <-  "/tmp/plot.png"
+    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
   print(paste("Saving plot to:", file))  # Debugging print
 
@@ -188,6 +188,9 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
       model_size=c(model_size,sum(beta_nz,theta_nz))
     }
 
+    file <-  "/tmp/plot.png"
+    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
+
     print(paste("Saving plot to:", file))  # Debugging print
 
     # Open PNG graphics device with proper width/height
@@ -218,6 +221,8 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
     # Call the plot function
 
+    file <-  "/tmp/plot.png"
+    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
 
     print(paste("Saving plot to:", file))  # Debugging print
@@ -250,6 +255,8 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
     # Call the plot function
 
+    file <-  "/tmp/plot.png"
+    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
 
     print(paste("Saving plot to:", file))  # Debugging print
