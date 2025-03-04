@@ -152,7 +152,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
   print(paste("Saving plot to:", file))  # Debugging print
 
   # Open PNG graphics device with proper width/height
-  png(file, width = 6.67, height = 6.67, units = "in", res = 300)
+  png(file)
 
   # Try to generate the plot safely
 
@@ -191,7 +191,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     print(paste("Saving plot to:", file))  # Debugging print
 
     # Open PNG graphics device with proper width/height
-    png(file, width = 6.67, height = 6.67, units = "in", res = 300)
+    png(file)
 
     # Try to generate the plot safely
 
@@ -223,7 +223,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     print(paste("Saving plot to:", file))  # Debugging print
 
     # Open PNG graphics device with proper width/height
-    png(file, width = 6.67, height = 6.67, units = "in", res = 300)
+    png(file)
 
     # Try to generate the plot safely
 
@@ -255,7 +255,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     print(paste("Saving plot to:", file))  # Debugging print
 
     # Open PNG graphics device with proper width/height
-    png(file, width = 6.67, height = 6.67, units = "in", res = 300)
+    png(file)
 
     # Try to generate the plot safely
 
