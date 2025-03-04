@@ -130,7 +130,7 @@ function(req, res) {
 #* @parser multi
 #* @parser rds
 #*  @post /plot
-#* @serializer png
+#* @serializer contentType list(type="image/png")
 
 function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
   # Load the package
@@ -146,9 +146,9 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
   # Call the plot function
 
-    file <-  "/data/plot.png"
-    if(!dir.exist("/data")) {dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE)}
+    file <-  "/tmp/plot.png"
 
+    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
   print(paste("Saving plot to:", file))  # Debugging print
 
@@ -165,8 +165,15 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
   dev.off()
   # Check if file exists
   print(paste("Does the file exist? ", file.exists(file)))
+  print(file.info(file)$size)
+  raw_data <- readBin(file, "raw", n = file.info(file)$size)
+  print(length(raw_data))
    # Check if file exists before returning
    if (file.exists(file)) {
+
+
+
+
      return(readBin(file, "raw", n = file.info(file)$size))
    } else {
      stop("Error: Base R plot file was not created successfully.")
@@ -190,8 +197,8 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
       model_size=c(model_size,sum(beta_nz,theta_nz))
     }
 
-    file <-  "/data/plot.png"
-    if(!dir.exist("/data")) {dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE)}
+    file <-  "/tmp/plot.png"
+    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
     print(paste("Saving plot to:", file))  # Debugging print
 
@@ -223,8 +230,8 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
     # Call the plot function
 
-    file <-  "/data/plot.png"
-    if(!dir.exist("/data")){ dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE)}
+    file <-  "/tmp/plot.png"
+    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
 
     print(paste("Saving plot to:", file))  # Debugging print
@@ -257,8 +264,8 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
     # Call the plot function
 
-    file <-  "/data/plot.png"
-    if( !dir.exist("/data")){ dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE) }
+    file <-  "/tmp/plot.png"
+    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
 
     print(paste("Saving plot to:", file))  # Debugging print
