@@ -155,14 +155,11 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
   png(file, width = 6.67, height = 6.67, units = "in", res = 300)
 
   # Try to generate the plot safely
-  tryCatch({
+
     plot(log(rds_file$Bpliable_call.rds$Likelihood),type = "l",ylab = "log(likelihood)",xlab = "iterations")
     #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
-    print("Plot generated successfully!")  # Debugging message
-  }, error = function(e) {
-    dev.off()  # Ensure the device is closed on error
-    stop("Error generating plot: ", e$message)
-  })
+    #print("Plot generated successfully!")  # Debugging message
+
 
   dev.off()
 
@@ -197,14 +194,10 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     png(file, width = 6.67, height = 6.67, units = "in", res = 300)
 
     # Try to generate the plot safely
-    tryCatch({
+
       plot(model_size,type = "l",ylab = "Model size",xlab = "iterations")
       #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
-      print("Plot generated successfully!")  # Debugging message
-    }, error = function(e) {
-      dev.off()  # Ensure the device is closed on error
-      stop("Error generating plot: ", e$message)
-    })
+
 
     dev.off()
 
@@ -233,14 +226,10 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     png(file, width = 6.67, height = 6.67, units = "in", res = 300)
 
     # Try to generate the plot safely
-    tryCatch({
+
       plot(rds_file$Bpliable_call.rds$pos_mpm_beta,main = "",xlab =  expression(beta) ,ylab = "coefficient")
       #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
-      print("Plot generated successfully!")  # Debugging message
-    }, error = function(e) {
-      dev.off()  # Ensure the device is closed on error
-      stop("Error generating plot: ", e$message)
-    })
+
 
     dev.off()
 
@@ -269,14 +258,10 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     png(file, width = 6.67, height = 6.67, units = "in", res = 300)
 
     # Try to generate the plot safely
-    tryCatch({
+
       plot(c(rds_file$Bpliable_call.rds$pos_mpm_theta),main = "",xlab = expression(theta),ylab = "coefficient" )
       #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
-      print("Plot generated successfully!")  # Debugging message
-    }, error = function(e) {
-      dev.off()  # Ensure the device is closed on error
-      stop("Error generating plot: ", e$message)
-    })
+
 
     dev.off()
 
