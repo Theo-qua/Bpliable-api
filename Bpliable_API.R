@@ -164,10 +164,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
   dev.off()
   # Check if file exists
-  print(paste("Does the file exist? ", file.exists(file)))
-  print(file.info(file)$size)
-  raw_data <- readBin(file, "raw", n = file.info(file)$size)
-  print(length(raw_data))
+
    # Check if file exists before returning
    if (file.exists(file)) {
 
@@ -304,9 +301,13 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
       theme_gray()
 
     print(gg_hist)
-    dir.create("/data", showWarnings = FALSE, recursive = TRUE)  # Ensure /data exists
-    file <- "/data/plot.png"
-    ggsave(plot=gg_hist,filename=file)
+    file <- "/tmp/plot.png"
+    dir.create(file, showWarnings = FALSE, recursive = TRUE)  # Ensure /data exists
+
+    ggsave(plot=gg_hist,filename=file,width = 5,       # Reduce width (in inches)
+           height = 4,      # Reduce height (in inches)
+           dpi = 100        # Lower DPI (Dots Per Inch) for smaller file size
+    )
     readBin(file, "raw", n = file.info(file)$size)
 
   }else if (type=="dist" & coef_val2!= 0){
@@ -323,9 +324,14 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
       theme_gray()
 
     print(gg_hist)
-    dir.create("/data", showWarnings = FALSE, recursive = TRUE)  # Ensure /data exists
-    file <- "/data/plot.png"
-    ggsave(plot=gg_hist,filename=file)
+    file <- "/tmp/plot.png"
+    dir.create(file, showWarnings = FALSE, recursive = TRUE)  # Ensure /data exists
+
+    ggsave(plot=gg_hist,filename=file,width = 5,       # Reduce width (in inches)
+           height = 4,      # Reduce height (in inches)
+           dpi = 100        # Lower DPI (Dots Per Inch) for smaller file size
+    )
+
     readBin(file, "raw", n = file.info(file)$size)
 
 
@@ -346,9 +352,13 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
       theme_gray()
 
     print(gg_hist)
-    dir.create("/data", showWarnings = FALSE, recursive = TRUE)  # Ensure /data exists
-    file <- "/data/plot.png"
-    ggsave(plot=gg_hist,filename=file)
+    file <- "/tmp/plot.png"
+    dir.create(file, showWarnings = FALSE, recursive = TRUE)  # Ensure /data exists
+
+    ggsave(plot=gg_hist,filename=file,width = 5,       # Reduce width (in inches)
+           height = 4,      # Reduce height (in inches)
+           dpi = 100        # Lower DPI (Dots Per Inch) for smaller file size
+    )
     readBin(file, "raw", n = file.info(file)$size)
 
 
