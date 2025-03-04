@@ -6,9 +6,9 @@ library(magrittr)
 library(ggplot2)
 library(gapminder)
 library(aws.s3)
-#* @apiTitle Bpliable API
-#* @apiDescription API for exploring Bpliable package
-#* Returns resuls and plots from Bpliable
+#* @apiTitle PliableBVS API
+#* @apiDescription API for exploring PliableBVS package
+#* Returns resuls and plots from PliableBVS
 #* @param rds_file:file a ist containing the data, X,Z,y to passed to the Bpliable function. Always save as my_data.rds
 #* @param family response type- either "gaussian", "binomial". In the binomial case, y should be 0s and 1s.
 #* @param alpha:numeric  a numeric value between 0 and 1
@@ -64,7 +64,7 @@ function(rds_file,
          lambda2_update=0){
 #function(rds_file, family, malpha, verbose1, verbose2){
   # Load the package
-  library(Bpliable)
+  library(PliableBVS)
 
   # Extract the data
   #print(data)
@@ -84,22 +84,22 @@ function(rds_file,
   #               verbose2 = verbose2)
   #print(fit)
 
-  fit<- Bpliable(Y = y, X = X, Z = Z, alpha = as.numeric(alpha), family = family,niter = as.numeric(niter),burnin = as.numeric(burnin),a_rho = as.numeric(a_rho), b_rho = as.numeric(b_rho), a_zeta = as.numeric(a_zeta), b_zeta = as.numeric(b_zeta), num_update = as.numeric(num_update), niter.update = as.numeric(niter_update), burnin.update = as.numeric(burnin_update), verbose1 = verbose1, verbose2 = verbose2, lam1 = as.numeric(lam1), lam2 = as.numeric(lam2), rho_prior = rho_prior, rho = as.numeric(rho), zeta = as.numeric(zeta), c2 = as.numeric(c2), v2 = as.numeric(v2),update_tau = update_tau, option.weight.group = option_weight_group,option.update = option_update, lambda2_update = as.numeric(lambda2_update))
+  fit<- PliableBVS(Y = y, X = X, Z = Z, alpha = as.numeric(alpha), family = family,niter = as.numeric(niter),burnin = as.numeric(burnin),a_rho = as.numeric(a_rho), b_rho = as.numeric(b_rho), a_zeta = as.numeric(a_zeta), b_zeta = as.numeric(b_zeta), num_update = as.numeric(num_update), niter.update = as.numeric(niter_update), burnin.update = as.numeric(burnin_update), verbose1 = verbose1, verbose2 = verbose2, lam1 = as.numeric(lam1), lam2 = as.numeric(lam2), rho_prior = rho_prior, rho = as.numeric(rho), zeta = as.numeric(zeta), c2 = as.numeric(c2), v2 = as.numeric(v2),update_tau = update_tau, option.weight.group = option_weight_group,option.update = option_update, lambda2_update = as.numeric(lambda2_update))
 
   #Bpliable(Y = y, X = X, Z = Z, alpha = as.numeric(malpha), family = family, niter = as.numeric(niter), burnin = as.numeric(burnin), a_rho = as.numeric(a_rho), b_rho = as.numeric(b_rho), a_zeta = as.numeric(a_zeta), b_zeta = as.numeric(b_zeta), num_update = as.numeric(num_update), niter.update = as.numeric(niter_update), burnin.update = as.numeric(burnin_update), verbose1 = verbose1, verbose2 = verbose2, lam1 = as.numeric(lam1), lam2 = as.numeric(lam2), rho_prior = rho_prior, rho = as.numeric(rho), zeta = as.numeric(zeta), c2 = as.numeric(c2), v2 = as.numeric(v2), update_tau = update_tau, option.weight.group = option_weight_group, option.update = option_update, lambda2_update = as.numeric(lambda2_update))
 
   dir.create("/data", showWarnings = FALSE, recursive = TRUE)  # Ensure /data exists
-  save_path <- "/data/Bpliable_call.rds"
+  save_path <- "/data/PliableBVS_call.rds"
   saveRDS(fit, save_path)
   print(file.exists(save_path)) # print the files in the data directory
-  return(list(message = "Model saved successfully", path = "Bpliable_call.rds"))
+  return(list(message = "Model saved successfully", path = "PliableBVS_call.rds"))
 }
 
 
 #* @get /get_results
 #* @serializer contentType list(type="application/octet-stream")
 function(req, res) {
-  file_path <- "/data/Bpliable_call.rds"
+  file_path <- "/data/PliableBVS_call.rds"
 
 
 
@@ -122,9 +122,9 @@ function(req, res) {
   #return(raw_data)
 }
 
-#* Returns a plots from the Bpliable object
+#* Returns a plots from the PliableBVS object
 #* @param type a string value for the type of plot. It can be c("likelihood","dist","val","cont","ms")
-#*@param rds_file:file the fitted Bpliable object which is Bpliable_call
+#*@param rds_file:file the fitted PliableBVS object which is Bpliable_call
 #*@param coef_val1:int a numeric value for the main coefficient position
 #*@param coef_val2:int a numeric value for the interaction coefficient position. It should be zero if you want only main effect.
 #* @parser multi
@@ -134,7 +134,7 @@ function(req, res) {
 
 function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
   # Load the package
-  library(Bpliable)
+  library(PliableBVS)
   library(graphics)
   library(plotly)
 
@@ -157,7 +157,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
   # Try to generate the plot safely
 
-    plot(log(rds_file$Bpliable_call.rds$Likelihood),type = "l",ylab = "log(likelihood)",xlab = "iterations")
+    plot(log(rds_file$PliableBVS_call.rds$Likelihood),type = "l",ylab = "log(likelihood)",xlab = "iterations")
     #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
     #print("Plot generated successfully!")  # Debugging message
 
@@ -187,10 +187,10 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     # Call the plot function
 
     model_size<-c()
-    for (i in 1:nrow(rds_file$Bpliable_call.rds$coef_beta_all)) {
-      beta_nz<-sum(rds_file$Bpliable_call.rds$coef_beta_all[i,]!=0)
+    for (i in 1:nrow(rds_file$PliableBVS_call.rds$coef_beta_all)) {
+      beta_nz<-sum(rds_file$PliableBVS_call.rds$coef_beta_all[i,]!=0)
 
-      theta_nz<-sum(rds_file$Bpliable_call.rds$coef_theta_all[i,,]!=0)
+      theta_nz<-sum(rds_file$PliableBVS_call.rds$coef_theta_all[i,,]!=0)
       model_size=c(model_size,sum(beta_nz,theta_nz))
     }
 
@@ -238,7 +238,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
     # Try to generate the plot safely
 
-      plot(rds_file$Bpliable_call.rds$pos_mpm_beta,main = "",xlab =  expression(beta) ,ylab = "coefficient")
+      plot(rds_file$PliableBVS_call.rds$pos_mpm_beta,main = "",xlab =  expression(beta) ,ylab = "coefficient")
       #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
 
 
@@ -272,7 +272,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
     # Try to generate the plot safely
 
-      plot(c(rds_file$Bpliable_call.rds$pos_mpm_theta),main = "",xlab = expression(theta),ylab = "coefficient" )
+      plot(c(rds_file$PliableBVS_call.rds$pos_mpm_theta),main = "",xlab = expression(theta),ylab = "coefficient" )
       #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
 
 
@@ -293,7 +293,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
 
     # Create a ggplot2 version
-    gg_hist <- ggplot(data.frame(x = rds_file$Bpliable_call.rds$coef[,coef_val1]),
+    gg_hist <- ggplot(data.frame(x = rds_file$PliableBVS_call.rds$coef[,coef_val1]),
                       aes(x = x)) +
       geom_histogram(fill="#69b3a2") +
       labs(x =bquote(beta*"_"*.(coef_val1) )
@@ -316,7 +316,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     coef_val2=as.numeric(coef_val2)
 
     # Create a ggplot2 version
-    gg_hist <- ggplot(data.frame(x = rds_file$Bpliable_call.rds$coef_theta[,coef_val1,coef_val2]),
+    gg_hist <- ggplot(data.frame(x = rds_file$PliableBVS_call.rds$coef_theta[,coef_val1,coef_val2]),
                       aes(x = x)) +
       geom_histogram(fill="#69b3a2") +
       labs(x =bquote(theta*"_"*.(coef_val1)*"_"*.(coef_val2) )
@@ -341,7 +341,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     coef_val2=as.numeric(coef_val2)
 
     # Create a ggplot2 version
-    gg_hist <- ggplot(data.frame(x = rds_file$Bpliable_call.rds$coef[,coef_val1],y=rds_file$Bpliable_call.rds$coef_theta[,coef_val1,coef_val2]),
+    gg_hist <- ggplot(data.frame(x = rds_file$PliableBVS_call.rds$coef[,coef_val1],y=rds_file$PliableBVS_call.rds$coef_theta[,coef_val1,coef_val2]),
                       aes(x = x,y=y)) +
 
 
@@ -367,8 +367,8 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 }
 
 
-#* Compute predicted values from a fitted Bpliable  object
-#* @param rds_file1:file the fitted Bpliable object which is Bpliable_call
+#* Compute predicted values from a fitted PliableBVS  object
+#* @param rds_file1:file the fitted PliableBVS object which is Bpliable_call
 #* @param rds_file2:file a ist containing the data, X,Z to passed to the Bpliable function. Always save as my_data.rds
 #* @param prob:numeric threshold for binomial prediction
 #* @parser multi
@@ -379,14 +379,14 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
   # print(dim(X))
   Z <- rds_file2$my_data.rds$Z
 
-  library(Bpliable)
+  library(PliableBVS)
 
 
 
-  pred_bpl<-model(beta0=rds_file1$Bpliable_call.rds$pos_median_beta0, theta0=rds_file1$Bpliable_call.rds$pos_median_theta0, beta= rds_file1$Bpliable_call.rds$pos_mpm_beta, theta=rds_file1$Bpliable_call.rds$pos_mpm_theta, X, Z)
+  pred_bpl<-model(beta0=rds_file1$PliableBVS_call.rds$pos_median_beta0, theta0=rds_file1$PliableBVS_call.rds$pos_median_theta0, beta= rds_file1$PliableBVS_call.rds$pos_mpm_beta, theta=rds_file1$PliableBVS_call.rds$pos_mpm_theta, X, Z)
 
-  if(rds_file1$Bpliable_call.rds$family=="gaussian"){
-    pred_bpl<-pred_bpl}else if(rds_file1$Bpliable_call.rds$family=="binomial"){
+  if(rds_file1$PliableBVS_call.rds$family=="gaussian"){
+    pred_bpl<-pred_bpl}else if(rds_file1$PliableBVS_call.rds$family=="binomial"){
       pred_bpl<-ifelse(pred_bpl>prob,1,0)}
 
   return(pred_bpl)
