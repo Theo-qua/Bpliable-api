@@ -146,23 +146,24 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
   # Call the plot function
 
-    file <-  "/tmp/plot.png"
+    file <-  "/data/plot.png"
     dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
   print(paste("Saving plot to:", file))  # Debugging print
 
   # Open PNG graphics device with proper width/height
-  png(file)
+  png(file,width = 6.67, height = 6.67, units = "in", res = 300)
 
   # Try to generate the plot safely
-
-    plot(log(rds_file$Bpliable_call.rds$Likelihood),type = "l",ylab = "log(likelihood)",xlab = "iterations")
+  plot(1:10, rnorm(10), main = "Test Base R Plot")
+  #  plot(log(rds_file$Bpliable_call.rds$Likelihood),type = "l",ylab = "log(likelihood)",xlab = "iterations")
     #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
     #print("Plot generated successfully!")  # Debugging message
 
 
   dev.off()
-
+  # Check if file exists
+  print(paste("Does the file exist? ", file.exists(file)))
    # Check if file exists before returning
    if (file.exists(file)) {
      return(readBin(file, "raw", n = file.info(file)$size))
@@ -188,7 +189,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
       model_size=c(model_size,sum(beta_nz,theta_nz))
     }
 
-    file <-  "/tmp/plot.png"
+    file <-  "/data/plot.png"
     dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
     print(paste("Saving plot to:", file))  # Debugging print
@@ -221,7 +222,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
     # Call the plot function
 
-    file <-  "/tmp/plot.png"
+    file <-  "/data/plot.png"
     dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
 
@@ -255,7 +256,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
 
     # Call the plot function
 
-    file <-  "/tmp/plot.png"
+    file <-  "/data/plot.png"
     dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
 
