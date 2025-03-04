@@ -147,16 +147,17 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
   # Call the plot function
 
     file <-  "/data/plot.png"
-    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
+    if(!dir.exist("/data") dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE))
+
 
   print(paste("Saving plot to:", file))  # Debugging print
 
   # Open PNG graphics device with proper width/height
-  png(file,width = 6.67, height = 6.67, units = "in", res = 300)
+  png(file)
 
   # Try to generate the plot safely
-  plot(1:10, rnorm(10), main = "Test Base R Plot")
-  #  plot(log(rds_file$Bpliable_call.rds$Likelihood),type = "l",ylab = "log(likelihood)",xlab = "iterations")
+
+    plot(log(rds_file$Bpliable_call.rds$Likelihood),type = "l",ylab = "log(likelihood)",xlab = "iterations")
     #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
     #print("Plot generated successfully!")  # Debugging message
 
@@ -190,7 +191,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     }
 
     file <-  "/data/plot.png"
-    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
+    if(!dir.exist("/data") dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE))
 
     print(paste("Saving plot to:", file))  # Debugging print
 
@@ -223,7 +224,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     # Call the plot function
 
     file <-  "/data/plot.png"
-    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
+    if(!dir.exist("/data") dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE))
 
 
     print(paste("Saving plot to:", file))  # Debugging print
@@ -257,7 +258,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     # Call the plot function
 
     file <-  "/data/plot.png"
-    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
+    if(!dir.exist("/data") dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE))
 
 
     print(paste("Saving plot to:", file))  # Debugging print
