@@ -147,7 +147,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
   # Call the plot function
 
     file <-  "/data/plot.png"
-    if(!dir.exist("/data") dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE))
+    if(!dir.exist("/data")) {dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE)}
 
 
   print(paste("Saving plot to:", file))  # Debugging print
@@ -191,7 +191,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     }
 
     file <-  "/data/plot.png"
-    if(!dir.exist("/data") dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE))
+    if(!dir.exist("/data")) {dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE)}
 
     print(paste("Saving plot to:", file))  # Debugging print
 
@@ -224,7 +224,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     # Call the plot function
 
     file <-  "/data/plot.png"
-    if(!dir.exist("/data") dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE))
+    if(!dir.exist("/data")){ dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE)}
 
 
     print(paste("Saving plot to:", file))  # Debugging print
@@ -258,7 +258,7 @@ function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
     # Call the plot function
 
     file <-  "/data/plot.png"
-    if(!dir.exist("/data") dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE))
+    if( !dir.exist("/data")){ dir.create(dirname("/data"), showWarnings = TRUE, recursive = TRUE) }
 
 
     print(paste("Saving plot to:", file))  # Debugging print
