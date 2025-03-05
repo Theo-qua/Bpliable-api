@@ -153,11 +153,7 @@ function(req, res,rds_file=NULL,type="likelihood", coef_val1=1,coef_val2=1){
 
     rds_file=readBin(default_rds, "raw", file.info(default_rds)$size)
 
-      # Set the Content-Type header to 'application/rds' for RDS files
-      res$setHeader("Content-Type", "application/rds")
 
-      # Set the Content-Disposition header so that the file is downloaded with the correct name
-      res$setHeader("Content-Disposition", paste("attachment; filename=", basename(default_rds), sep = ""))
 
       # Serve the .rds file
 
