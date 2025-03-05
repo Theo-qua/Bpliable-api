@@ -151,7 +151,7 @@ function(req, res,rds_file=NULL,type="likelihood", coef_val1=1,coef_val2=1){
 
 
 
-      rds_file<- readBin(file_path, "raw", file.info(file_path)$size)
+      rds_file<- readBin(default_rds, "raw", file.info(default_rds)$size)
       print(rds_file)
       # Set the Content-Type header to 'application/rds' for RDS files
       res$setHeader("Content-Type", "application/rds")
