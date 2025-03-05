@@ -171,7 +171,40 @@ function(req, res,rds_file=NULL,type="likelihood", coef_val1=1,coef_val2=1){
       # Read the actual RDS object
       PliableBVS_call.rds <- readRDS(temp_rds)
       rds_file$PliableBVS_call.rds <- PliableBVS_call.rds
-      print(rds_file$PliableBVS_call.rds$pos_mpm_beta)
+
+
+      file <-  "/tmp/plot.png"
+
+      dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
+
+      print(paste("Saving plot to:", file))  # Debugging print
+
+      # Open PNG graphics device with proper width/height
+      png(file)
+
+      # Try to generate the plot safely
+
+      plot(log(rds_file$PliableBVS_call.rds$Likelihood),type = "l",ylab = "log(likelihood)",xlab = "iterations")
+      #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
+      #print("Plot generated successfully!")  # Debugging message
+
+
+      dev.off()
+      # Check if file exists
+
+      # Check if file exists before returning
+      if (file.exists(file)) {
+
+
+
+
+        return(readBin(file, "raw", n = file.info(file)$size))
+      } else {
+        stop("Error: Base R plot file was not created successfully.")
+      }
+
+
+
   } else {
     res$status <- 400  # Bad Request
     print(list(error = "No valid RDS file found!"))
