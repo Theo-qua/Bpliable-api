@@ -402,7 +402,8 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
 
     # Check if file exists before returning
     if (file.exists(file)) {
-      return(readBin(file, "raw", n = file.info(file)$size))
+      return(jsonlite::fromJSON(plotly::plotly_json(fig, pretty = TRUE)))
+      #return(readBin(file, "raw", n = file.info(file)$size))
     } else {
       stop("Error: Base R plot file was not created successfully.")
     }
