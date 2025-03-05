@@ -383,7 +383,7 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
     print(paste("Saving plot to:", file))  # Debugging print
 
     # Open PNG graphics device with proper width/height
-    png(file)
+    #png(file)
 
     xb<- rds_file$PliableBVS_call.rds$coef[,coef_val1]
     yt <- rds_file$PliableBVS_call.rds$coef_theta[,coef_val1,coef_val2]
@@ -398,7 +398,7 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
     fig <- layout(s, showlegend = FALSE)
 
     fig
-    dev.off()
+    #dev.off()
 
     # Check if file exists before returning
     if (file.exists(file)) {
