@@ -376,11 +376,11 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
     coef_val1=as.numeric(coef_val1)
     coef_val2=as.numeric(coef_val2)
 
-    file <-  "/tmp/plot.png"
-    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
+    #file <-  "/tmp/plot.png"
+    #dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
 
-    print(paste("Saving plot to:", file))  # Debugging print
+    #print(paste("Saving plot to:", file))  # Debugging print
 
     # Open PNG graphics device with proper width/height
     #png(file)
@@ -388,9 +388,10 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
     xb<- rds_file$PliableBVS_call.rds$coef[,coef_val1]
     yt <- rds_file$PliableBVS_call.rds$coef_theta[,coef_val1,coef_val2]
 
-    # Ensure xb and yt exist
-    if (is.null(xb) || is.null(yt)) {
-      stop("Error: Coefficient values are incorrect or missing.")
+    # Ensure data is valid
+    if (!is.numeric(xb) || length(xb) == 0 || !is.numeric(yt) || length(yt) == 0) {
+      res$status <- 404
+      return(list(error = "Error: Coefficient values are incorrect or missing."))
     }
 
 
@@ -409,11 +410,12 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
 
     # Check if file exists before returning
     #if (file.exists(file)) {
-      return(jsonlite::fromJSON(plotly::plotly_json(fig, pretty = TRUE)))
+      #return(jsonlite::fromJSON(plotly::plotly_json(fig, pretty = TRUE)))
       #return(readBin(file, "raw", n = file.info(file)$size))
     #} else {
      # stop("Error: Base R plot file was not created successfully.")
     #}
+    return(fig)
 
 
 
