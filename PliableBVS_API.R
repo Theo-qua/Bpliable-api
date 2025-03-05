@@ -169,7 +169,13 @@ function(req, res,rds_file=NULL,type="likelihood", coef_val1=1,coef_val2=1){
     print(list(error = "No valid RDS file found!"))
   }
 
- print(readRDS(rds_file))
+  temp_rds <- tempfile(fileext = ".rds")  # Create a temporary file
+  writeBin(rds_file, temp_rds)  # Write raw binary data back to a file
+
+  # Read the actual RDS object
+  restored_data <- readRDS(temp_rds)
+
+ print(restored_data)
 
   if(type=="likelihood"){
     # Define file path (use tempfile() if necessary)
