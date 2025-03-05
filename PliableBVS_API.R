@@ -455,6 +455,6 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
   if(rds_file1$PliableBVS_call.rds$family=="gaussian"){
     pred_bpl<-pred_bpl}else if(rds_file1$PliableBVS_call.rds$family=="binomial"){
       pred_bpl<-ifelse(pred_bpl>prob,1,0)}
-
+print(pred_bpl)
   return(pred_bpl)
 }
