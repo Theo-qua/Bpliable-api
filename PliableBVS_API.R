@@ -169,7 +169,7 @@ function(req, res,rds_file=NULL,type="likelihood", coef_val1=1,coef_val2=1){
     print(list(error = "No valid RDS file found!"))
   }
 
- print(rds_file)
+ print(rds_file$PliableBVS_call.rds)
 
   if(type=="likelihood"){
     # Define file path (use tempfile() if necessary)
