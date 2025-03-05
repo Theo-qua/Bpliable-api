@@ -124,7 +124,6 @@ function(req, res) {
 
 #* Returns a plots from the PliableBVS object
 #* @param type a string value for the type of plot. It can be c("likelihood","dist","val","cont","ms")
-#*@param rds_file:file the fitted PliableBVS object which is PliableBVS_call. If you dont have then unselct the file and use the default file
 #*@param coef_val1:int a numeric value for the main coefficient position
 #*@param coef_val2:int a numeric value for the interaction coefficient position. It should be zero if you want only main effect.
 #* @parser multi
@@ -132,7 +131,7 @@ function(req, res) {
 #*  @post /plot
 #* @serializer contentType list(type="image/png")
 
-function(req, res,rds_file=NULL,type="likelihood", coef_val1=1,coef_val2=1){
+function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
   # Load the package
   library(PliableBVS)
   library(graphics)
@@ -144,10 +143,7 @@ function(req, res,rds_file=NULL,type="likelihood", coef_val1=1,coef_val2=1){
   default_rds <- "/data/PliableBVS_call.rds"
 
   # Use user-provided file_path or default file
-  if (!is.null(rds_file) ) {
-
-    rds_file=rds_file # Load user-provided file
-  } else if (file.exists(default_rds)) {
+   if (file.exists(default_rds)) {
 
 
 
