@@ -402,8 +402,8 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
       plot_ly(y = yt, type = "histogram",color = I("blue")),
       nrows = 2, heights = c(0.2, 0.8), widths = c(0.8, 0.2), margin = 0,
       shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE
-    )
-    fig <- layout(s, showlegend = FALSE)
+    )%>%
+      layout(showlegend = FALSE)
 
     #fig
     #dev.off()
@@ -415,7 +415,7 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
     #} else {
      # stop("Error: Base R plot file was not created successfully.")
     #}
-    return(fig)
+    return(jsonlite::fromJSON(plotly::plotly_json(s, pretty = TRUE)))
 
 
 
