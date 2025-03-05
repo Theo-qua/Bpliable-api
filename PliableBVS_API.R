@@ -144,14 +144,14 @@ function(req, res,rds_file=NULL,type="likelihood", coef_val1=1,coef_val2=1){
   default_rds <- "/data/PliableBVS_call.rds"
 
   # Use user-provided file_path or default file
-  rds_file <- if (!is.null(rds_file) ) {
+  if (!is.null(rds_file) ) {
 
-    rds_file # Load user-provided file
+    rds_file=rds_file # Load user-provided file
   } else if (file.exists(default_rds)) {
 
 
 
-       readBin(default_rds, "raw", file.info(default_rds)$size)
+    rds_file=readBin(default_rds, "raw", file.info(default_rds)$size)
 
       # Set the Content-Type header to 'application/rds' for RDS files
       res$setHeader("Content-Type", "application/rds")
@@ -169,7 +169,7 @@ function(req, res,rds_file=NULL,type="likelihood", coef_val1=1,coef_val2=1){
     print(list(error = "No valid RDS file found!"))
   }
 
- print(rds_file$PliableBVS_call.rds)
+ print(readRDS(rds_file))
 
   if(type=="likelihood"){
     # Define file path (use tempfile() if necessary)
