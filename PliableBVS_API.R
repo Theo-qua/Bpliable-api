@@ -157,7 +157,7 @@ function(req, res,rds_file=NULL,type="likelihood", coef_val1=1,coef_val2=1){
       res$setHeader("Content-Type", "application/rds")
 
       # Set the Content-Disposition header so that the file is downloaded with the correct name
-      res$setHeader("Content-Disposition", paste("attachment; filename=", basename(file_path), sep = ""))
+      res$setHeader("Content-Disposition", paste("attachment; filename=", basename(default_rds), sep = ""))
       print(rds_file)
       # Serve the .rds file
 
