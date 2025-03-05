@@ -173,7 +173,7 @@ function(req, res,rds_file=NULL,type="likelihood", coef_val1=1,coef_val2=1){
 
     rds_file<-rds_file # Load user-provided file
   } else  {
-    print(rds_file))
+    print(rds_file)
   }
 
   if(type=="likelihood"){
