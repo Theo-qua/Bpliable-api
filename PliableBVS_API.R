@@ -129,7 +129,7 @@ function(req, res) {
 #* @parser multi
 #* @parser rds
 #*  @post /plot
-#* @serializer contentType list(type="image/png")
+#* @serializer contentType list(type="image/png/json")
 
 function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
   # Load the package
@@ -387,6 +387,13 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
 
     xb<- rds_file$PliableBVS_call.rds$coef[,coef_val1]
     yt <- rds_file$PliableBVS_call.rds$coef_theta[,coef_val1,coef_val2]
+
+    # Ensure xb and yt exist
+    if (is.null(xb) || is.null(yt)) {
+      stop("Error: Coefficient values are incorrect or missing.")
+    }
+
+
     s <- subplot(
       plot_ly(x = xb, type = "histogram",color = I("red")),
       plotly_empty(),
@@ -397,16 +404,16 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
     )
     fig <- layout(s, showlegend = FALSE)
 
-    fig
+    #fig
     #dev.off()
 
     # Check if file exists before returning
-    if (file.exists(file)) {
+    #if (file.exists(file)) {
       return(jsonlite::fromJSON(plotly::plotly_json(fig, pretty = TRUE)))
       #return(readBin(file, "raw", n = file.info(file)$size))
-    } else {
-      stop("Error: Base R plot file was not created successfully.")
-    }
+    #} else {
+     # stop("Error: Base R plot file was not created successfully.")
+    #}
 
 
 
