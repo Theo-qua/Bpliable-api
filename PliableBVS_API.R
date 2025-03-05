@@ -62,21 +62,21 @@ function(rds_file,
          option_weight_group="TRUE",
          option_update="global",
          lambda2_update=0){
-#function(rds_file, family, malpha, verbose1, verbose2){
+  #function(rds_file, family, malpha, verbose1, verbose2){
   # Load the package
   library(PliableBVS)
 
   # Extract the data
   #print(data)
   X <- rds_file$my_data.rds$X
- # print(dim(X))
+  # print(dim(X))
   Z <- rds_file$my_data.rds$Z
   #print(rds_file$my_data.rds$Z)
   y <- rds_file$my_data.rds$y
   y=matrix(y,ncol=1)
   # Call the Bpliable function
   #fit<- Bpliable(Y = y,
- #                X = X,
+  #                X = X,
   #               Z = Z,
   #               family = family,
   #               alpha=as.numeric(malpha),
@@ -104,15 +104,15 @@ function(req, res) {
 
 
   if (file.exists(file_path)) {
-  file_data <- readBin(file_path, "raw", file.info(file_path)$size)
-  # Set the Content-Type header to 'application/rds' for RDS files
-  res$setHeader("Content-Type", "application/rds")
+    file_data <- readBin(file_path, "raw", file.info(file_path)$size)
+    # Set the Content-Type header to 'application/rds' for RDS files
+    res$setHeader("Content-Type", "application/rds")
 
-  # Set the Content-Disposition header so that the file is downloaded with the correct name
-  res$setHeader("Content-Disposition", paste("attachment; filename=", basename(file_path), sep = ""))
+    # Set the Content-Disposition header so that the file is downloaded with the correct name
+    res$setHeader("Content-Disposition", paste("attachment; filename=", basename(file_path), sep = ""))
 
-  # Serve the .rds file
-  return(file_data)
+    # Serve the .rds file
+    return(file_data)
   }else {
     # If the file does not exist, return a 404 error
     res$status <- 404
@@ -143,7 +143,7 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
   default_rds <- "/data/PliableBVS_call.rds"
 
   # Use user-provided file_path or default file
-   if (file.exists(default_rds)) {
+  if (file.exists(default_rds)) {
 
 
 
@@ -151,18 +151,18 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
 
 
 
-      # Serve the .rds file
+    # Serve the .rds file
 
 
-     # Load default file
+    # Load default file
 
 
-      temp_rds <- tempfile(fileext = ".rds")  # Create a temporary file
-      writeBin(rds_file, temp_rds)  # Write raw binary data back to a file
+    temp_rds <- tempfile(fileext = ".rds")  # Create a temporary file
+    writeBin(rds_file, temp_rds)  # Write raw binary data back to a file
 
-      # Read the actual RDS object
-      PliableBVS_call.rds <- readRDS(temp_rds)
-      rds_file$PliableBVS_call.rds <- PliableBVS_call.rds
+    # Read the actual RDS object
+    PliableBVS_call.rds <- readRDS(temp_rds)
+    rds_file$PliableBVS_call.rds <- PliableBVS_call.rds
 
 
 
@@ -178,39 +178,39 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
   if(type=="likelihood"){
     # Define file path (use tempfile() if necessary)
 
-  #print(rds_file$Bpliable_call.rds$coef[, as.numeric(coef_val1)])
+    #print(rds_file$Bpliable_call.rds$coef[, as.numeric(coef_val1)])
 
-  # Call the plot function
+    # Call the plot function
 
     file <-  "/tmp/plot.png"
 
     dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
-  print(paste("Saving plot to:", file))  # Debugging print
+    print(paste("Saving plot to:", file))  # Debugging print
 
-  # Open PNG graphics device with proper width/height
-  png(file)
+    # Open PNG graphics device with proper width/height
+    png(file)
 
-  # Try to generate the plot safely
+    # Try to generate the plot safely
 
     plot(log(rds_file$PliableBVS_call.rds$Likelihood),type = "l",ylab = "log(likelihood)",xlab = "iterations")
     #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
     #print("Plot generated successfully!")  # Debugging message
 
 
-  dev.off()
-  # Check if file exists
+    dev.off()
+    # Check if file exists
 
-   # Check if file exists before returning
-   if (file.exists(file)) {
-
-
+    # Check if file exists before returning
+    if (file.exists(file)) {
 
 
-     return(readBin(file, "raw", n = file.info(file)$size))
-   } else {
-     stop("Error: Base R plot file was not created successfully.")
-   }
+
+
+      return(readBin(file, "raw", n = file.info(file)$size))
+    } else {
+      stop("Error: Base R plot file was not created successfully.")
+    }
 
 
 
@@ -240,8 +240,8 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
 
     # Try to generate the plot safely
 
-      plot(model_size,type = "l",ylab = "Model size",xlab = "iterations")
-      #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
+    plot(model_size,type = "l",ylab = "Model size",xlab = "iterations")
+    #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
 
 
     dev.off()
@@ -274,8 +274,8 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
 
     # Try to generate the plot safely
 
-      plot(rds_file$PliableBVS_call.rds$pos_mpm_beta,main = "",xlab =  expression(beta) ,ylab = "coefficient")
-      #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
+    plot(rds_file$PliableBVS_call.rds$pos_mpm_beta,main = "",xlab =  expression(beta) ,ylab = "coefficient")
+    #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
 
 
     dev.off()
@@ -308,8 +308,8 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
 
     # Try to generate the plot safely
 
-      plot(c(rds_file$PliableBVS_call.rds$pos_mpm_theta),main = "",xlab = expression(theta),ylab = "coefficient" )
-      #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
+    plot(c(rds_file$PliableBVS_call.rds$pos_mpm_theta),main = "",xlab = expression(theta),ylab = "coefficient" )
+    #plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = c(coef_val1))
 
 
     dev.off()
@@ -333,7 +333,7 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
                       aes(x = x)) +
       geom_histogram(fill="#69b3a2") +
       labs(x =bquote(beta*"_"*.(coef_val1) )
-, y='Frequency')+
+           , y='Frequency')+
       theme_gray()
 
     print(gg_hist)
@@ -376,30 +376,42 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
     coef_val1=as.numeric(coef_val1)
     coef_val2=as.numeric(coef_val2)
 
-    # Create a ggplot2 version
-    gg_hist <- ggplot(data.frame(x = rds_file$PliableBVS_call.rds$coef[,coef_val1],y=rds_file$PliableBVS_call.rds$coef_theta[,coef_val1,coef_val2]),
-                      aes(x = x,y=y)) +
+    file <-  "/tmp/plot.png"
+    dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
 
 
-      geom_density_2d_filled()+
-      geom_density_2d(colour = "black")+
-      labs(y =bquote(theta*"_"*.(coef_val1)*"_"*.(coef_val2) )
-           , x=bquote(beta*"_"*.(coef_val1) ))+
-      theme_gray()
+    print(paste("Saving plot to:", file))  # Debugging print
 
-    print(gg_hist)
-    file <- "/tmp/plot.png"
-    dir.create(file, showWarnings = FALSE, recursive = TRUE)  # Ensure /data exists
+    # Open PNG graphics device with proper width/height
+    png(file)
 
-    ggsave(plot=gg_hist,filename=file,width = 5,       # Reduce width (in inches)
-           height = 4,      # Reduce height (in inches)
-           dpi = 100        # Lower DPI (Dots Per Inch) for smaller file size
+    xb<- rds_file$PliableBVS_call.rds$coef[,coef_val1]
+    yt <- rds_file$PliableBVS_call.rds$coef_theta[,coef_val1,coef_val2]
+    s <- subplot(
+      plot_ly(x = xb, type = "histogram",color = I("red")),
+      plotly_empty(),
+      plot_ly(x = xb, y = yt, type = "histogram2dcontour"),
+      plot_ly(y = yt, type = "histogram",color = I("blue")),
+      nrows = 2, heights = c(0.2, 0.8), widths = c(0.8, 0.2), margin = 0,
+      shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE
     )
-    readBin(file, "raw", n = file.info(file)$size)
+    fig <- layout(s, showlegend = FALSE)
+
+    fig
+    dev.off()
+
+    # Check if file exists before returning
+    if (file.exists(file)) {
+      return(readBin(file, "raw", n = file.info(file)$size))
+    } else {
+      stop("Error: Base R plot file was not created successfully.")
+    }
+
+
 
 
   }
- # plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = coef_val)
+  # plot(type = type, x = rds_file$Bpliable_call.rds, coef_val = coef_val)
 }
 
 
@@ -409,7 +421,7 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
 #* @parser multi
 #* @parser rds
 #* @post /predict
- function(req, res,rds_file2,prob=0.5) {
+function(req, res,rds_file2,prob=0.5) {
   X <- rds_file2$my_data.rds$X
   # print(dim(X))
   Z <- rds_file2$my_data.rds$Z
@@ -455,6 +467,6 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
   if(rds_file1$PliableBVS_call.rds$family=="gaussian"){
     pred_bpl<-pred_bpl}else if(rds_file1$PliableBVS_call.rds$family=="binomial"){
       pred_bpl<-ifelse(pred_bpl>prob,1,0)}
-print(pred_bpl)
+  print(pred_bpl)
   return(pred_bpl)
 }
