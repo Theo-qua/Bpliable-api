@@ -404,7 +404,6 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
 
 
 #* Compute predicted values from a fitted PliableBVS  object
-#* @param rds_file1:file the fitted PliableBVS object which is Bpliable_call
 #* @param rds_file2:file a ist containing the data, X,Z to passed to the Bpliable function. Always save as my_data.rds
 #* @param prob:numeric threshold for binomial prediction
 #* @parser multi
@@ -416,6 +415,38 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
   Z <- rds_file2$my_data.rds$Z
 
   library(PliableBVS)
+  default_rds <- "/data/PliableBVS_call.rds"
+
+  # Use user-provided file_path or default file
+  if (file.exists(default_rds)) {
+
+
+
+    rds_file1=readBin(default_rds, "raw", file.info(default_rds)$size)
+
+
+
+    # Serve the .rds file
+
+
+    # Load default file
+
+
+    temp_rds <- tempfile(fileext = ".rds")  # Create a temporary file
+    writeBin(rds_file1, temp_rds)  # Write raw binary data back to a file
+
+    # Read the actual RDS object
+    PliableBVS_call.rds <- readRDS(temp_rds)
+    rds_file1$PliableBVS_call.rds <- PliableBVS_call.rds
+
+
+
+
+
+  } else {
+    res$status <- 400  # Bad Request
+    print(list(error = "No valid RDS file found!"))
+  }
 
 
 
