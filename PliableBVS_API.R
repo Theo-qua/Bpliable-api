@@ -409,7 +409,7 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
 #* @parser multi
 #* @parser rds
 #* @post /predict
- function(rds_file2,prob=0.5) {
+ function(req, res,rds_file2,prob=0.5) {
   X <- rds_file2$my_data.rds$X
   # print(dim(X))
   Z <- rds_file2$my_data.rds$Z
