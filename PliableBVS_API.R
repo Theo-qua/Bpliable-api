@@ -132,11 +132,30 @@ function(req, res) {
 #*  @post /plot
 #* @serializer contentType list(type="image/png")
 
-function(rds_file,type="likelihood", coef_val1=1,coef_val2=1){
+function(req, res,rds_file=NULL,type="likelihood", coef_val1=1,coef_val2=1){
   # Load the package
   library(PliableBVS)
   library(graphics)
   library(plotly)
+
+
+  # Default RDS file location
+  default_rds <- "/data/PliableBVS_call.rds"
+
+  # Use user-provided file_path or default file
+  rds_file <- if (!is.null(rds_file) ) {
+    rds_file # Load user-provided file
+  } else if (file.exists(default_rds)) {
+     readBin(file_path, "raw", file.info(file_path)$size)
+    # Set the Content-Type header to 'application/rds' for RDS files
+    res$setHeader("Content-Type", "application/rds")
+
+    # Set the Content-Disposition header so that the file is downloaded with the correct name
+    res$setHeader("Content-Disposition", paste("attachment; filename=", basename(file_path), sep = ""))  # Load default file
+  } else {
+    res$status <- 400  # Bad Request
+    return(list(error = "No valid RDS file found!"))
+  }
 
 
   if(type=="likelihood"){
