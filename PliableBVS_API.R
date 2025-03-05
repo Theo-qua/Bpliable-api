@@ -169,6 +169,12 @@ function(req, res,rds_file=NULL,type="likelihood", coef_val1=1,coef_val2=1){
     print(list(error = "No valid RDS file found!"))
   }
 
+ if (!is.null(rds_file) ) {
+
+    rds_file<-rds_file # Load user-provided file
+  } else  {
+    print(rds_file))
+  }
 
   if(type=="likelihood"){
     # Define file path (use tempfile() if necessary)
