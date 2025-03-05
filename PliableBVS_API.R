@@ -124,7 +124,7 @@ function(req, res) {
 
 #* Returns a plots from the PliableBVS object
 #* @param type a string value for the type of plot. It can be c("likelihood","dist","val","cont","ms")
-#*@param rds_file:file the fitted PliableBVS object which is Bpliable_call
+#*@param rds_file:file the fitted PliableBVS object which is PliableBVS_call. If you dont have then unselct the file and use the default file
 #*@param coef_val1:int a numeric value for the main coefficient position
 #*@param coef_val2:int a numeric value for the interaction coefficient position. It should be zero if you want only main effect.
 #* @parser multi
