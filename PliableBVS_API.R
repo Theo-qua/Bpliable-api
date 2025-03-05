@@ -171,7 +171,7 @@ function(req, res,rds_file=NULL,type="likelihood", coef_val1=1,coef_val2=1){
       # Read the actual RDS object
       PliableBVS_call.rds <- readRDS(temp_rds)
       rds_file$PliableBVS_call.rds <- PliableBVS_call.rds
-      print(rds_file$PliableBVS_call.rds)
+      print(rds_file$PliableBVS_call.rds$pos_mpm_beta)
   } else {
     res$status <- 400  # Bad Request
     print(list(error = "No valid RDS file found!"))
