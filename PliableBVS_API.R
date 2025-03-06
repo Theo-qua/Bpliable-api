@@ -129,7 +129,7 @@ function(req, res) {
 #* @parser multi
 #* @parser rds
 #*  @post /plot
-#* @serializer contentType list(type="image/png/json")
+#* @serializer contentType list(type="image/png")
 
 function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
   # Load the package
