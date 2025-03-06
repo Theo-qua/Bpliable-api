@@ -376,48 +376,27 @@ function(req, res,type="likelihood", coef_val1=1,coef_val2=1){
     coef_val1=as.numeric(coef_val1)
     coef_val2=as.numeric(coef_val2)
 
-    #file <-  "/tmp/plot.png"
-    #dir.create(dirname(file), showWarnings = TRUE, recursive = TRUE)
+
+    # Create a ggplot2 version
+    gg_hist <- ggplot(data.frame(x = rds_file$PliableBVS_call.rds$coef[,coef_val1],y=rds_file$PliableBVS_call.rds$coef_theta[,coef_val1,coef_val2]),
+                      aes(x = x,y=y)) +
 
 
-    #print(paste("Saving plot to:", file))  # Debugging print
+      geom_density_2d_filled()+
+      geom_density_2d(colour = "black")+
+      labs(y =bquote(theta*"_"*.(coef_val1)*"_"*.(coef_val2) )
+           , x=bquote(beta*"_"*.(coef_val1) ))+
+      theme_gray()
 
-    # Open PNG graphics device with proper width/height
-    #png(file)
+    print(gg_hist)
+    file <- "/tmp/plot.png"
+    dir.create(file, showWarnings = FALSE, recursive = TRUE)  # Ensure /data exists
 
-    xb<- rds_file$PliableBVS_call.rds$coef[,coef_val1]
-    yt <- rds_file$PliableBVS_call.rds$coef_theta[,coef_val1,coef_val2]
-
-    # Ensure data is valid
-    if (!is.numeric(xb) || length(xb) == 0 || !is.numeric(yt) || length(yt) == 0) {
-      res$status <- 404
-      return(list(error = "Error: Coefficient values are incorrect or missing."))
-    }
-
-
-    s <- subplot(
-      plot_ly(x = xb, type = "histogram",color = I("red")),
-      plotly_empty(),
-      plot_ly(x = xb, y = yt, type = "histogram2dcontour"),
-      plot_ly(y = yt, type = "histogram",color = I("blue")),
-      nrows = 2, heights = c(0.2, 0.8), widths = c(0.8, 0.2), margin = 0,
-      shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE
-    )%>%
-      layout(showlegend = FALSE)
-
-    #fig
-    #dev.off()
-
-    # Check if file exists before returning
-    #if (file.exists(file)) {
-      #return(jsonlite::fromJSON(plotly::plotly_json(fig, pretty = TRUE)))
-      #return(readBin(file, "raw", n = file.info(file)$size))
-    #} else {
-     # stop("Error: Base R plot file was not created successfully.")
-    #}
-    return(jsonlite::fromJSON(plotly::plotly_json(s, pretty = TRUE)))
-
-
+    ggsave(plot=gg_hist,filename=file,width = 5,       # Reduce width (in inches)
+           height = 4,      # Reduce height (in inches)
+           dpi = 100        # Lower DPI (Dots Per Inch) for smaller file size
+    )
+    readBin(file, "raw", n = file.info(file)$size)
 
 
   }
